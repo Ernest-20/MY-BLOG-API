@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 
-const connectDB = require("./database/DB");
+const connectdb = require("./database/connectdb.js");
 const logger = require("./middleware/logger");
 const articleRoutes = require("./routes/articleRoutes");
 const cors = require('cors');
@@ -16,7 +16,7 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 
-connectDB();
+connectdb();
 
 // Global Error Handler
 app.use((err, req, res, next) => {

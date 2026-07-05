@@ -9,11 +9,12 @@ deleteArticle,
  searchArticles
 } = require('../controller/articleControllers');
 
-// search (place before :id)
-router.get('/search', searchArticles);
-
 // CRUD routes
 router.get('/', getAllArticles);
+
+// search must come before /:id
+router.get('/', getAllArticles);
+router.get('/search', searchArticles);
 
 router.get('/:id', getArticleById);
 
@@ -22,6 +23,5 @@ router.post('/', createArticle);
 router.put('/:id', updateArticle);
 
 router.delete('/:id', deleteArticle);
-router.get('/search', searchArticles);
 
 module.exports = router;
