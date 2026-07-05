@@ -87,3 +87,24 @@ exports.searchArticles = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.searchArticles = async (req, res) => {
+  try {
+    const keyword = req.query.q;
+
+    if (!keyword) {
+      return res.status(400).json({ message: "Search query is required" });
+    }
+
+    const results = await Article.find({
+      $or: [
+        { title: { $regex: keyword, $options: "i" } },
+        { content: { $regex: keyword, $options: "i" } },
+      ],
+    });
+
+    res.json(results);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

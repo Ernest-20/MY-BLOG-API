@@ -22,5 +22,6 @@ router.post('/', createArticle);
 router.put('/:id', updateArticle);
 
 router.delete('/:id', deleteArticle);
+router.get('/search', searchArticles);
 
 module.exports = router;
