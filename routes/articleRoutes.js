@@ -1,27 +1,25 @@
 const express = require('express');
 const router = express.Router();
+
 const {
-getAllArticles,
-getArticleById,
-createArticle,
-updateArticle,
-deleteArticle,
- searchArticles
+  getAllArticles,
+  getArticleById,
+  createArticle,
+  updateArticle,
+  deleteArticle,
+  searchArticles
 } = require('../controller/articleControllers');
 
-// CRUD routes
-router.get('/', getAllArticles);
+const requireAuth = require("../middleware/requireAuth");
 
-// search must come before /:id
+// Public article routes
 router.get('/', getAllArticles);
 router.get('/search', searchArticles);
-
 router.get('/:id', getArticleById);
 
-router.post('/', createArticle);
-
-router.put('/:id', updateArticle);
-
-router.delete('/:id', deleteArticle);
+// Protected article routes (JWT required)
+router.post('/', requireAuth, createArticle);
+router.put('/:id', requireAuth, updateArticle);
+router.delete('/:id', requireAuth, deleteArticle);
 
 module.exports = router;

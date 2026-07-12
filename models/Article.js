@@ -12,7 +12,14 @@ const articleSchema = new mongoose.Schema({
   author: {
     type: String,
     required: true,
+  },
+
+  userId:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User",
+    required:true
   }
+
 }, {
   timestamps: true
 });
@@ -23,6 +30,4 @@ articleSchema.index({
     content: 'text',
 });
 
-const Article = mongoose.model("Article", articleSchema);
-
-module.exports = Article;
+module.exports = mongoose.model("Article",articleSchema);
