@@ -1,11 +1,19 @@
 const express = require("express");
-require("dotenv").config();
+
+// Import our config file FIRST — this runs dotenv.config() internally
+// and gives us validateEnv() plus clean access to each env value.
+const config = require("./config/config");
 
 const connectdb = require("./database/connectdb");
-const logger = require("./middleware/logger");
+const logger = require("./middlewares/logger");
 const articleRoutes = require("./routes/articleRoutes");
 const authRoutes = require("./routes/authRoutes");
 const cors = require("cors");
+
+// Run this before anything else touches the database or starts the server.
+// If a required env var is missing, this stops the app right here with
+// a clear error message instead of failing mysteriously later.
+config.validateEnv();
 
 const app = express();
 
@@ -23,13 +31,11 @@ app.use("/api/auth", authRoutes);
 
 // Global Error Handler
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: "An unexpected error occurred!" });
+  console.error(err.stack);
+  res.status(500).json({ message: "An unexpected error occurred!" });
 });
 
-// Start Server
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+// Start Server — using config.PORT instead of reading process.env directly
+app.listen(config.PORT, () => {
+  console.log(`Server is listening on port ${config.PORT}`);
 });

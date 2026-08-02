@@ -8,9 +8,9 @@ const {
   updateArticle,
   deleteArticle,
   searchArticles
-} = require('../controller/articleControllers');
+} = require('../controllers/articleControllers');
 
-const requireAuth = require("../middleware/requireAuth");
+const requireAuth = require("../middlewares/requireAuth");
 
 // Public article routes
 router.get('/', getAllArticles);
