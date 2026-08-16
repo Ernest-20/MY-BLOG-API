@@ -9,10 +9,15 @@ const {
 } = require('../controllers/authController');
 
 const upload = multer({ dest: 'uploads/' });
+const upload = require('../middlewares/upload');
+
+const router = express.Router();
 
 router.post('/upload', upload.single('image'), (req, res) => {
-   console.log('body', req.body);
-   console.log('file', req.file);
+   const fileUrl = req.file.path;
+   const fileName = req.filename;
+
+
    res.send("Hello, from upload");
 });
 
