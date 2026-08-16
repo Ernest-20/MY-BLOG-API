@@ -5,7 +5,7 @@ const express = require("express");
 const config = require("./config/config");
 
 const connectdb = require("./database/connectdb");
-const logger = require("./middlewares/logger");
+const logRequest = require("./middlewares/logger");
 const articleRoutes = require("./routes/articleRoutes");
 const authRoutes = require("./routes/authRoutes");
 const cors = require("cors");
@@ -20,7 +20,12 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(logger);
+app.use(logRequest);
+app.get("/upload", (req, res) => {
+   console.log("body", req.body);
+
+   console.log("file", req.file);
+});
 
 // Connect to MongoDB
 connectdb();
